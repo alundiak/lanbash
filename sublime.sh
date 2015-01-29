@@ -26,3 +26,7 @@ git clone git://github.com/angular-ui/AngularJS-sublime-package.git "$PACKAGES/A
 # Looks like Function definition search/click/jump plugin
 # https://packagecontrol.io/packages/WhoCalled%20Function%20Finder
 git clone https://bitbucket.org/rablador/whocalled.git "$PACKAGES/WhoCalled";
+
+# Markdown preview
+# https://github.com/revolunet/sublimetext-markdown-preview
+git clone https://github.com/revolunet/sublimetext-markdown-preview.git "$PACKAGES/Markdown Preview"
