@@ -1,0 +1,23 @@
+{
+  "name": "lanbash",
+  "version": "1.0.0",
+  "description": "CLI Scripting Experiments",
+  "main": "index.js",
+  "dependencies": {
+    "wifi-password": "^1.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "./networking.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alundiak/lanbash.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alundiak/lanbash/issues"
+  },
+  "homepage": "https://github.com/alundiak/lanbash#readme"
+}
