@@ -1,3 +1,4 @@
 lanbash
 =======
-*Added readme.md* _will continue later_
+
+Unix Bash, Windows Batch and other potential CLI experiments.

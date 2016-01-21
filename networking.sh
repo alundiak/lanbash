@@ -16,7 +16,7 @@ tracwroute "$IP"
 
 nslookup "$IP"
 
-echo "Now we will scann wi-fi networks"
+echo "Now we will scan wi-fi networks"
 # Will scan all wi-fi networks.
 /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/sbin/airport -s
 
