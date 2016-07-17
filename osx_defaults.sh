@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script to containe useful Mac OS commands. Somtimes, I may use.
+# Script to contain useful Mac OS commands. Sometimes, I may use.
 # Planned to have 2 modes: "Change all as I want" and "restore all I changed to default"
 #
 

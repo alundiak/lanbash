@@ -10,6 +10,9 @@ ifconfig
 # TODO: Parse ifconfig results and get IP, or prompt/read user to enter
 IP="127.0.0.1"
 
+wifiInterface="en0"
+wifiIP=$(ipconfig getifaddr "$wifiInterface")
+
 networksetup -listallhardwareports
 
 tracwroute "$IP"
