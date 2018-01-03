@@ -217,3 +217,5 @@ pip-log.txt
 node_modules
 bower_components
 .idea
+package-lock.json
+yarn.lock

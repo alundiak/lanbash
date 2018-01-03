@@ -4,7 +4,7 @@
   "description": "CLI Scripting Experiments",
   "main": "index.js",
   "dependencies": {
-    "wifi-password": "^1.0.8"
+    "wifi-password": "^3.0.1"
   },
   "devDependencies": {},
   "scripts": {
