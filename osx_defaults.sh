@@ -30,3 +30,18 @@ defaults write com.apple.appstore ShowDebugMenu -bool true
 defaults write com.apple.TextEdit RichText -int 0 # or -bool false
 # defaults write com.apple.TextEdit RichText -int 1 # default
 
+
+# https://www.tekrevue.com/tip/show-path-finder-title-bar/
+#true is by default  - was for me on MacOS Mojave v10.14.1 
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool false
+# => helped me to show short name of folder - final
+
+# https://apple.stackexchange.com/questions/40821/how-do-i-get-finder-windows-to-reopen-on-start-up
+# After Mojave installed, com.apple.finder NSQuitAlwaysKeepsWindows set/changed to false.
+# So I had to set true. 
+defaults write com.apple.finder NSQuitAlwaysKeepsWindows -bool true
+# This was helpful:
+# defaults read com.apple.finder NSQuitAlwaysKeepsWindows # shows value (1/0)
+
+
+
