@@ -27,6 +27,4 @@ do
 
     # https://www.maketecheasier.com/ip-address-geolocation-lookups-linux/
     curl freegeoip.net/xml/${IP}
-
-
 done

@@ -66,10 +66,10 @@ function nodejs(){
 	"modules_install_for_jenikins_onlly")
 		cd $JENKINS_JOB_ROOT
 		# npm install	#TODO think how we define Jenkins Dependencies ONLY and install them only on Jenkins server.
-		# It may be manuall listed moduels  (npm install module1 module2 moduleX) or use package.json and otherDependencies
+		# It may be manual listed modules  (npm install module1 module2 moduleX) or use package.json and otherDependencies
 	;;
 	"modules_install_for_project")
-		# Based on packaje.json in Project npm will install all modules we need
+		# Based on package.json in Project npm will install all modules we need
 		cd $SCM_ROOT
 		npm install
 	;;
@@ -82,7 +82,6 @@ function nodejs(){
 	esac
 
 }
-
 
 #
 # Common function to perform task related to Jenkins
@@ -98,7 +97,7 @@ function jenkins (){
 		yum install jenkins
 	;;
 	"configure")
-		echo "Now you will be promted to edit a few files. Please press 'Enter' to proceed with file edit."
+		echo "Now you will be prompted to edit a few files. Please press 'Enter' to proceed with file edit."
 		echo "And after finish save file and close GEDIT window, so that to proceed with main script."
 
 		echo "Press Enter to edit file /etc/sysconfig/jenkins: Find JENKINS_AJP_PORT and set/modify to '-1'"
@@ -151,7 +150,7 @@ case $1 in
 		jenkins run
 	;;
 	*)
-		echo "You have providied not valid data. Please usage info in header of this script."
+		echo "You have provided not valid data. Please usage info in header of this script."
 	;;
 esac
 

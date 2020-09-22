@@ -3,10 +3,9 @@
 #
 
 #
-## Initial Instalation Setsp of KMS project on new instances
+## Initial Installation Setup of KMS project on new instances
 #
 function KMS_Setup (){
-
 	# get Liferay wget or curl
 	# unpuck it
 	# install and configure
@@ -18,10 +17,8 @@ function KMS_Setup (){
 	#echo "`node --version; npm --version; grunt --version;`"
 }
 
-
-
 #
-# Setup Softserve Proxy
+# Setup SoftServe Proxy
 #
 function SSProxy () {
 
@@ -30,7 +27,7 @@ function SSProxy () {
 		export https_proxy=""
 		export ftp_proxy=""
 		echo "Console proxy settings removed."
-	elif [ "$1" == "setup" ]; then	
+	elif [ "$1" == "setup" ]; then
 		if [ -z  "`echo $http_proxy`" ]; then
 			export http_proxy="proxy.softserveinc.com:8080"
 			echo "HTTP Proxy was set manually to: $http_proxy"
@@ -57,7 +54,7 @@ function SSProxy () {
 }
 
 #
-## General function to work with files which are palnned to be restored (archives, database backups, etc)
+## General function to work with files which are planed to be restored (archives, database backups, etc)
 #
 
 #
@@ -65,7 +62,7 @@ function SSProxy () {
 # KMSRestore "dl"
 #
 function KMSRestore (){
-	
+
 # find -newer KMS_03.11.13.PROD.backup -name "*.backup"
 # ls -Art *.backup | tail -n 1
 # ls -ltrc *.backup -m1 | tail -n 1
@@ -82,14 +79,14 @@ function KMSRestore (){
 
 	ls -lst *.7z; # just show list of archives we have
 
-	if [ "$2" == "-m" ]; then 
+	if [ "$2" == "-m" ]; then
 		echo -n "$bldred Type file archive to be restored from >>> $txtrst"
 		read FILE_IN
 		FILE_Z=$FILE_IN
-	else 
+	else
 		FILE_Z="`ls -t *.7z | head -n1`" # Important code to get exact ARCHIVE file as latest to be used in auro-restore
 	fi
-	
+
 	if [ -n "$FILE_Z" -a -f "$FILE_Z" ]; then
 		echo "Archive file $bldred'$FILE_Z'$txtrst will be using $txtbld Type 'y' to confirm: $txtrst"
 		read FILE_CONFIRM
@@ -97,7 +94,7 @@ function KMSRestore (){
 
 	if [ "$FILE_CONFIRM" == "y" ]; then
 
-		#filename=$(basename $FILE); 
+		#filename=$(basename $FILE);
 		#ext=${filename##*.}
 
 		if [ "$1" == "db" ]; then
@@ -115,7 +112,7 @@ function KMSRestore (){
 		else
 			echo "$bldred Backup file is not provided OR with wrong extension OR does not exist$txtrst"
 		fi
-		
+
 	else
 		echo "No actions done. Try again later :) Maybe you typed something wrong or there is some bug in this awesome script :)"
 	fi
@@ -123,11 +120,11 @@ function KMSRestore (){
 }
 
 #
-## DATABASE RESTORE Helper function to get list of files sorted by date and clasified by specific file extension. 
+## DATABASE RESTORE Helper function to get list of files sorted by date and clasified by specific file extension.
 #
 
 #
-# kms db restore  		| Auto mode by default. 
+# kms db restore  		| Auto mode by default.
 # kms db restore -m		| Using -m will be manual mode
 #
 function DB_Restore(){
@@ -135,7 +132,7 @@ function DB_Restore(){
 	FILE="$1"
 
 	if [ -n "`kms tomcat alive`" ]; then
-		echo "Your Tomcat is still runing. Shut it down."
+		echo "Your Tomcat is still running. Shut it down."
 	else
 		cd $KMS_DB_BACKUP
 
@@ -149,7 +146,7 @@ function DB_Restore(){
 
 		/usr/pgsql-9.1/bin/pg_restore -U postgres -d "$DB" "$FILE"
 		echo "$bldblue'$DB' database restored$txtrst"
-	
+
 		rm $FILE # delete temp. *backup file
 
 		echo "@HMSTN.COM users replace ..."
@@ -162,11 +159,11 @@ function DB_Restore(){
 }
 
 #
-## DOCUMENT LIBRARY RESTORE Helper function to get list of files sorted by date and clasified by specific file extension. 
+## DOCUMENT LIBRARY RESTORE Helper function to get list of files sorted by date and clasified by specific file extension.
 #
 
 #
-# kms tomcat restore  		| Auto mode by default. 
+# kms tomcat restore  		| Auto mode by default.
 # kms tomcat restore -m		| Using -m will be manual mode
 #
 function DL_Restore(){
@@ -175,17 +172,17 @@ function DL_Restore(){
 	cd $DATA
 
 	if [ -d "$DATA_DL" ]; then
-					
+
 		#1 Backup existed files on tomcat
 		if [ ! -f ./$DATA_LOCAL_BACKUP_FILE_7Z ]; then
 			#tar -czvf ./$DATA_LOCAL_BACKUP_FILE ./document_library > /dev/null
 			7za a ./$DATA_LOCAL_BACKUP_FILE_7Z ./document_library/ > /dev/null
 			echo "Local data library files copied to backup ../$DATA_LOCAL_BACKUP_FILE"
-		else 
+		else
 			echo "File ../$DATA_LOCAL_BACKUP_FILE_7Z has been already created, at first time. Next archives forbidden."
 		fi
 
-		#2 rm -rf that fiels from document_library
+		#2 rm -rf that files from document_library
 		rm -rf $DATA_DL
 		echo "$DATA_DL folder removed. Will be recreated shortly."
 
@@ -210,12 +207,11 @@ function DL_Restore(){
 
 #function KMS_DB(){}
 
-
 #
 ## Database update code  -to get rid of email from HMS client side. We update emails with hmstn.com.ua to avoid email sending to real Client emails.
 #
 function DB_Replace_HMS_Users(){
-	# After deployment and commit database dump and rollout new DB dump on QA TEST and TRUNK servers (OR LOCALHOST), 
+	# After deployment and commit database dump and rollout new DB dump on QA TEST and TRUNK servers (OR LOCALHOST),
 	# need to run shell script on these servers to modify emails to avoid sending notification emails from our dev/qa environments to real clients.
 
 	if [ -n "`kms tomcat alive`" ]; then
@@ -290,11 +286,11 @@ function KMS_Modules (){
 				#done
 
 			fi
-			
-			# Now to be more confident we need to rebuild our handlebars templets from KMSBase/src/main/webapp/templates/*
+
+			# Now to be more confident we need to rebuild our handlebars templates from KMSBase/src/main/webapp/templates/*
 			#grunt template_inline
 			# it will rebuild ./KMSTheme/src/main/webapp/js/templates.js if some handlebars files were been changed. If no changes - no need to redeploy KMSTheme.
-				 
+
 		;;
 
 
@@ -312,8 +308,8 @@ function KMS_Modules (){
 			else
 				echo "$D1 NOT found"
 			fi
-	
-			sleep 10 # Waiting for Tomcat untill he properly undeploy KMSExt-ext module and after that we may delete jar file
+
+			sleep 10 # Waiting for Tomcat until he properly undeploy KMSExt-ext module and after that we may delete jar file
 
 			#3. REMOVE xml file
 			cd "$WEBAPPS/ROOT/WEB-INF/"
@@ -336,20 +332,20 @@ function KMS_Modules (){
 			else
 				echo "$F2 NOT found"
 			fi
-	
-			#5 Install KMSExt		 
+
+			#5 Install KMSExt
 			cd $KMS_TRUNK;
 			cd KMSExt
 			mvn clean install > /dev/null
 			echo "KMSExt has been built"
-			 
+
 			#6 Deploy KmsExt-ext
 			cd KMSExt-ext
 			mvn liferay:deploy > /dev/null
 			sleep 10
 			echo "$bldblu KMSExt-Ext has been deployed $txtrst"
 
-			#7. Tomcat Restart		
+			#7. Tomcat Restart
 			# Files ext-KMSExt-ext.xml and ext-KMSExt-ext-service.jar APPEAR ONLY AFTER TOMCAT RESTART
 			# USE ECLIPSE RESTART kms tomcat_stop and kms tomcat_start
 
@@ -363,7 +359,7 @@ function KMS_Modules (){
 		;;
 
 		"theme")
-			cd $KMS_TRUNK;		
+			cd $KMS_TRUNK;
 			cd KMSTheme
 			mvn clean package liferay:deploy > /dev/null
 			#while :
@@ -372,18 +368,18 @@ function KMS_Modules (){
 					echo "$bldblu KMSTheme has been deployed $txtrst"; #break
 			#	fi
 			#done
-	
+
 		;;
 
 		"all") #postponed
-			#kms ext; 
+			#kms ext;
 			#kmsbase; sleep 15
 			#kms layout; sleep 15
 			#kms theme; sleep 10
 			echo "All KMS modules are build and deployed to server, now server will be restarted";
 			#kms tomcat_restart
 		;;
-	
+
 		"modules:")
 			# variant 1 - using args.
 			#for var in "$@"
@@ -394,27 +390,25 @@ function KMS_Modules (){
 			#for x in $arr
 
 			#variant 3 - using "," delimiter weird way :)
-			MODULES_LIST="$2"; 
+			MODULES_LIST="$2";
 			delimiter=',';
 			#read -ra MODULES_LIST <<< "$INPUT"
 			ARR=(${MODULES_LIST//$delimiter/ })
 			for i in "${ARR[@]}"; do
-				kms "$i"; 
+				kms "$i";
 				sleep 10; # some time delay between modules redeployment. with base and theme it's enough, but ext will need more time. TODO TESTING
 			done
 			MODULES_LIST=""
-	
+
 		;;
 	esac
 }
-
-
 
 #
 # Set of actions with Liferay/KMS tomcat
 #
 
-# 
+#
 # kms tomcat stop				| stop Tomcat and delete temp files and
 # kms tomcat start [-withReIndex]		| delete temp files and and start Tomcat
 # kms tomcat restart [-withReIndex]		| restart Tomcat using above actions
@@ -422,19 +416,18 @@ function KMS_Modules (){
 # kms tomcat data_backup			| TODO making backup of document_library
 # kms tomcat restore [-m]			| Restore document_library from 7z archive into tomcat folder
 # kms tomcat log [ -liferay | -catalina ]	| watch logs (liferay or native tomcat or both)
-# 
+#
 function KMS_Tomcat(){
 
 	action=$1
 	option=$2
-	# thiS coDe is ideally ok, but I toght that variablE -Duser.timzone will be overriten, not concatenated
+	# This code is ideally ok, but I thought that variablE -Duser.timzone will be overwritten, not concatenated
 	#export JAVA_OPTS="$JAVA_OPTS -Duser.timezone=Europe/Kiev "
-
 
 	case $action in
 		"tmp_del")
 			cd $LIFERAY_TOMCAT_TEMP
-			rm -rf ./*	
+			rm -rf ./*
 			echo "$txtbld Temp files from Tomcat server deleted $txtrst"
 		;;
 		"start")
@@ -457,7 +450,7 @@ function KMS_Tomcat(){
 			echo "$bldred Tomcat server stoped $txtrst"
 		;;
 		"restart")
-			kms tomcat stop;	
+			kms tomcat stop;
 			kms tomcat start "$2";  ## SET $2 due to 3 functions steps and losing var $action
 			echo "$bldred Tomcat server restarted $txtrst"
 		;;
@@ -472,30 +465,30 @@ function KMS_Tomcat(){
 		;;
 		"alive")
 			if [ "$option" ];then
-				PORT="$option"; #otherwsie PORT=8080 by default from kms_config.sh
+				PORT="$option"; #otherwise PORT=8080 by default from kms_config.sh
 			fi
 
 			lsof -w -i tcp:"$PORT" | grep java | grep localhost
-	
+
 			# kill -9 `ps auwx | grep java | awk '{print $2}' | xargs`
 			# kill -9 $(pgrep java)
 			# kill -9 $(pidof java)
 			# killall -9 java
-			# ps auxw | grep tomcat		
+			# ps auxw | grep tomcat
 		;;
 		"log")
-			# This uses $? - a Shell variable which stores the return/exit code of the last command that was exected. 
+			# This uses $? - a Shell variable which stores the return/exit code of the last command that was expected.
 			# grep exits with return code "0" on success and non-zero on failure (e.g. no lines found returns "1" ) - a typical arrangement for a Unix command, by the way.
 
 			cd $LIFERAY_TOMCAT
 			if [ "$attr" ==  "-liferay" ]; then
 				tail -f $LIFERAY_LOG_FILE
-			elif [ "$attr" ==  "-catalina" ]; then  
+			elif [ "$attr" ==  "-catalina" ]; then
 				tail -f $TOMCAT_LOG_FILE
 			else
 				tail -F --lines=100 $LIFERAY_LOG_FILE $TOMCAT_LOG_FILE
 			fi
-			 
+
 			#while [a = tail -f ./logs/liferay*.log]
 			#do
 
@@ -508,10 +501,10 @@ function KMS_Tomcat(){
 
 		;;
 		*)
-			echo "You've provided 'kms tomcat' only. Please add options."	
+			echo "You've provided 'kms tomcat' only. Please add options."
 		;;
 	esac
-	
+
 }
 
 #
@@ -571,8 +564,7 @@ function RemoteActions(){
 		destFolder="$4"
 
 		if [ "$action" ]; then
-			
-			case $action in	
+			case $action in
 				"restart")
 					kms vm "$remoteENV" stop
 					sleep 10;
@@ -582,17 +574,17 @@ function RemoteActions(){
 					echo -n "Are you sure to$bldred $action $txtrst Remote Server$bldred $remote_server $txtrst?If so press 'y'"
 					read REMOTE_ACTION
 					if [ "$REMOTE_ACTION" == "y" ]; then
-					ssh "$remote_user"@"$remote_server" $SHUTDOWNSH 
+					ssh "$remote_user"@"$remote_server" $SHUTDOWNSH
 					fi
 				;;
 				"start")
 					ssh "$remote_user"@"$remote_server" $STARTUPSH
-					kms vm "$remoteENV" log 
+					kms vm "$remoteENV" log
 				;;
 				"log")
 					ssh "$remote_user"@"$remote_server" tail -f $TOMCAT_LOGS"/catalina.out"
 					# or use remote 'qatest log' (in fact kms_env.sh)
-					#ssh "$remote_user"@"$remote_server" tail -f qatest log  
+					#ssh "$remote_user"@"$remote_server" tail -f qatest log
 				;;
 				"copyTo")
 					if [ -f "$fileToCopy" ];then
@@ -615,13 +607,13 @@ function RemoteActions(){
 					#ssh -t "$remote_user"@"$remote_server" sudo tail -f /var/log/pgqsl
 					echo "TODO"
 				;;
-				
+
 				*)
 					action=""
 					echo "$bldred Please specify valid action to be executed on remote environment $txtrst";
 				;;
 			esac
-			
+
 		else
 			action=""
 
@@ -632,12 +624,12 @@ function RemoteActions(){
 				remote_user="$user"; X_TAIL="";
 			fi
 
-			echo "$bldred You will be connected to remote server in Softserve Network:$txtrst $remote_descr - $remote_server under user $remote_user $X_TAIL"
+			echo "$bldred You will be connected to remote server in SoftServe Network:$txtrst $remote_descr - $remote_server under user $remote_user $X_TAIL"
 			ssh $X_Enabled $remote_user@$remote_server
 
 		fi
 	else
-		echo "VM is not specified or is not valid"		
+		echo "VM is not specified or is not valid"
 	fi
 }
 
@@ -650,11 +642,11 @@ function KMS_MAN_PAGE (){
 	#MANPATH="/usr/share/man" # -general folder fo whole man-s
 	# Looks like may be user folder
 	MANPATH="/usr/local/share/man"
-	case $1 in 
+	case $1 in
 		"install")
 			#sudo cp $KMS/$MANFILE "$MANPATH/man8/$MANFILE.1"
 			#sudo gzip "$MANPATH/man8/$MANFILE.1"
-													
+
 			sudo install -g 0 -o 0 -m 0644 $KMS/$MANFILE "$MANPATH/man8/"
 			gzip "$MANPATH/man8/$MANFILE.1"
 		;;
@@ -668,7 +660,7 @@ function KMS_MAN_PAGE (){
 ## Main function to work with Node.JS on KMS prj.
 #
 function KMS_NodeJS(){
-	
+
 	if [ "$2" == "-proxy" ]; then
 		echo "To be sure that Installation will go properly, let's check Proxy:"
 
@@ -694,7 +686,7 @@ function KMS_NodeJS(){
 			rm $NODE_JS_TAR
 			echo "Original file $NODE_JS_TAR removed ..."
 
-			DIR_NODE_JS="`ls -dt node-v* | head -n1`" 
+			DIR_NODE_JS="`ls -dt node-v* | head -n1`"
 			echo "Node.JS untared into $DIR_NODE_JS and will be used to install."
 
 			# go to newlly created folder
@@ -702,7 +694,7 @@ function KMS_NodeJS(){
 
 			echo  "Are you sure? If so type 'y'"
 			#read I_M_READY_TO_INSTALL_NODE_JS
-				
+
 			# Here should SUDO work. TBD
 			su
 			# =======================
@@ -711,23 +703,20 @@ function KMS_NodeJS(){
 			./configure 			# checks for dependencies and creates a makefile
 			make 				# executes that makefile, which results in compiling the source code into binary executable(s), libraries and any other outputs
 			make install 			# copies the files you just created from the current directory to their permanent homes, /usr/local/bin and such
-			# =======================	
+			# =======================
+		;;
 
-
-		;;			
-		
 		"update") # http://davidwalsh.name/upgrade-nodejs
 
 			# Here should SUDO work. TBD
-			su	
+			su
 			npm cache clean -f
 			npm install -g n
 			n stable
-
 		;;
 
 		"uninstall") ## http://stackoverflow.com/questions/5123533/how-can-i-uninstall-or-upgrade-my-old-node-js-version
-			# Check: 
+			# Check:
 			# /bin/node bin/node-waf include/node lib/node lib/pkgconfig/nodejs.pc share/man/man1/node.1
 
 			# rm -r bin/node bin/node-waf include/node lib/node lib/pkgconfig/nodejs.pc share/man/man1/node.1
@@ -745,37 +734,34 @@ function KMS_NodeJS(){
 			# lrwxrwxrwx.  1 root root      38 Mar 15 05:31 npm -> ../lib/node_modules/npm/bin/npm-cli.js
 
 			# Here should SUDO work. TBD
-			su 
+			su
 			#=========================================================
 			# With no sources
 			npm rm npm -g
 			# alias
 			# npm uninstall npm
-			
+
 			#sudo rm -rf /usr/local/{bin/{node,npm},lib/node_modules/npm,lib/node,share/man/*/node.*}
-			
-			# if you have sources	
+
+			# if you have sources
 			cd "$DOWNLOADED_NODE_JS_DIR"/"node-v0.10.13";
 			 make uninstall
 
 			#yum uninstall gcc-c++
 			#yum uninstall openssl-devel
 			#=========================================================
-
 		;;
-	
+
 		*)
 			echo "def"
 		;;
 	esac
 }
 
-
 #
 ## Work with Node.JS npm modules. Jul-08 Added.
 #
 function NPM_Modules(){
-
 	cd $KMS_TRUNK
 
 	for module in ${NPM_MODULES[@]}
@@ -794,7 +780,6 @@ function NPM_Modules(){
 ## Main function to work with Grunt.JS on KMS prj.
 #
 function KMS_GruntJS(){
-
 	# WE HAVE ISSUE WITH PROXY STILL !!!
 
 	cd $KMS_TRUNK
@@ -807,21 +792,21 @@ function KMS_GruntJS(){
 
 			grunt build # After Node.JS installed, we need to build Grunt.JS
 		;;
-		
+
 		"setup")
-			NPM_Modules install "$HOW_TO_INSTALL" # --save-dev 
-#or
-# npm install # but this way a litle buggy. JSHint stop wporking after that.
+			NPM_Modules install "$HOW_TO_INSTALL" # --save-dev
+      # or
+      # npm install # but this way a little buggy. JSHint stop working after that.
 		;;
 
 		"clear")
 			NPM_Modules uninstall
-	# TODO AND TEST
-	#			npm uninstall grunt
-	#			npm uninstall -g grunt-cli
-	# TODO AND TEST
+    	# TODO AND TEST
+			# npm uninstall grunt
+			# npm uninstall -g grunt-cli
+    	# TODO AND TEST
 		;;
-	
+
 		"update")
 			# Check what modules new are added into package.json and npm install them
 			# Somehow check kms_config.sh or Gruntfile.js or kms.json to get list of modules and install/uninstall/update/check/clear them
@@ -831,8 +816,8 @@ function KMS_GruntJS(){
 
 		"upgrade")
 			echo "Grunt.JS upgrade"
-		;;	
-		
+		;;
+
 		*)
 			grunt
 		;;
@@ -846,8 +831,6 @@ function KMS_GruntJS(){
 function SCM (){
 	echo "TODO";
 }
-
-
 
 # sudo date -s "$DATE_STRING"
 # hwclock --show

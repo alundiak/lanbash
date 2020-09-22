@@ -1,26 +1,22 @@
-#
-#
+#!/bin/bash
 
-#
-#
+# "mvn clean package" - build and packaging into WAR
+# OR
+# "mvn clean install" (with packaging and pointing artifact to local maven repo)
+# http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 
-"mvn clean package" - build and packaging into WAR
-OR
-"mvn clean install" (with packaging and pointing artifact to local maven repo)
-http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+# "mvn clean package -o" - packaging into WAR but wothout trying to download artifacts again
+# "mvn clean install -o" - packaging and installation to maven repo into WAR but wothout trying to download artifacts again
 
-"mvn clean package -o" - packaging into WAR but wothout trying to download artifacts again
-"mvn clean install -o" - packaging and installation to maven repo into WAR but wothout trying to download artifacts again
-
-"mvn clean package|install -o -DskipTests=true" - packaging|installing with test skipping
-"mvn clean test -o" - run only tests
-More details:
-http://maven.apache.org/scm/plugins/index.html
+# "mvn clean package|install -o -DskipTests=true" - packaging|installing with test skipping
+# "mvn clean test -o" - run only tests
+# More details:
+# http://maven.apache.org/scm/plugins/index.html
 
 
 function UserConfirm() {
 
-read CONFIRM
+  read CONFIRM
 
   case $CONFIRM in
     y|Y|YES|yes|Yes) 
@@ -31,9 +27,7 @@ read CONFIRM
       echo "You should confirm in proper way 'y|Y|YES|yes|Yes' OR 'n|N|no|NO|No'"; exit ;;
   esac
 
-
 }
-
 
 function TomcatAdminister(){
 

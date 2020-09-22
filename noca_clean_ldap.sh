@@ -45,7 +45,6 @@ case $1 in
 
       ;;
 
-
   *)
     echo "Please provide type of clean: (nr | ur | all)"; 
     exit;
