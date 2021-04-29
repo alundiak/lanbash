@@ -1,5 +1,5 @@
 {
-  "name": "lanbash",
+  "name": "@lundiak/lanbash",
   "version": "1.0.0",
   "description": "CLI Scripting Experiments",
   "main": "index.js",
