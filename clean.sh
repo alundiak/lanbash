@@ -1,8 +1,17 @@
 #!/bin/bash
 
-TO_DELETE="node_modules"
+TO_DELETE1="node_modules"
 
-for ENTRY in `find ../  -name "$TO_DELETE" -prune -depth +1 -print`
+for ENTRY in `find ../  -name "$TO_DELETE1" -prune -depth +1 -print`
+do
+    echo "$ENTRY is being deleted..."
+    rm -rf $ENTRY
+    echo "$ENTRY has been deleted..."
+done
+
+TO_DELETE2="bower_components"
+
+for ENTRY in `find ../  -name "$TO_DELETE2" -prune -depth +1 -print`
 do
     echo "$ENTRY is being deleted..."
     rm -rf $ENTRY
@@ -46,6 +55,12 @@ pip3 cache purge
 # So in 2021 I manually renamed fodler, and newlly aut-recreated Cache fodler got ~
 # not permitted EVEN with sudo, so need to delete manually
 
+# echo "Clearing deno cache ..."
+# FYI From deno the docs https://deno.land/manual/linking_to_external_code :
+# $HOME/Library/Caches/deno If something fails, it falls back to $HOME/.deno
+# https://github.com/denoland/deno/issues/3437
+# there is suggestion of feature.
+
 echo "Clearing MacOS user cache ..."
 rm -rf ~/.cache/**
 
@@ -64,4 +79,9 @@ rm -rf ~/.anaconda/navigator/temp/**
 
 echo "Clearing RN(ReactNative?) temp files ..."
 rm -rf ~/.rncache/**
+
+# maybe clean iMovie Render files
+# Details: https://www.techjunkie.com/clear-disk-space-imovie/
+# find ~/Movies/iMovie\ Library.imovielibrary -path “*/Render Files” -type d -exec rm -r {} +
+# https://remarkablemark.org/blog/2016/06/04/free-up-imovie-disk-space/
 
