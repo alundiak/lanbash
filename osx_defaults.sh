@@ -4,7 +4,6 @@
 # Planned to have 2 modes: "Change all as I want" and "restore all I changed to default"
 #
 
-
 # http://osxdaily.com/2010/02/12/how-to-quit-the-finder/
 defaults write com.apple.finder QuitMenuItem -bool true && killall Finder
 # defaults write com.apple.finder QuitMenuItem -bool false && killall Finder #default
