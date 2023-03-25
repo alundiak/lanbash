@@ -21,9 +21,9 @@ nslookup "$IP"
 
 echo "Now we will scan wi-fi networks"
 # Will scan all wi-fi networks.
+# MacBook path
 /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/sbin/airport -s
 
 node wifi.js
-
 
 # READ this: http://www.infoworld.com/article/2614879/mac-os-x/top-20-os-x-command-line-secrets-for-power-users.html?page=2
